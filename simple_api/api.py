@@ -4,7 +4,7 @@ from flask import Flask
 api = Flask(__name__)
 
 
-import simple_api.service
+import simple_api.service  # noqa
 
 
 def get_api():
