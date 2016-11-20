@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request
 
-from simple_api.http import (
+from simple_api.http_helper import (
     success,
     created,
     does_not_exist,
@@ -20,9 +20,9 @@ db = DB()
 
 @app.route('/objects', methods=['POST'])
 def post_object():
-
     try:
-        data = request.get_json()
+        data = request.get_json(force=True)
+        data['id'] = db.index
         db.table[db.index] = data
     except Exception as e:
         return server_error()
@@ -45,7 +45,7 @@ def list_object():
 def get_object(id):
     try:
         return success(db.table[id])
-    except IndexError as e:
+    except KeyError as e:
         return does_not_exist()
     except Exception as e:
         return server_error()
@@ -55,7 +55,8 @@ def get_object(id):
 def delete_object(id):
     try:
         del db.table[id]
-
+    except KeyError as e:
+        return does_not_exist()
     except Exception as e:
         return server_error()
 
@@ -68,7 +69,7 @@ def put_object(id):
         data = request.get_json()
         old_data = db.table[id]
         db.table[id] = data
-    except IndexError as e:
+    except KeyError as e:
         return does_not_exist()
     except Exception as e:
         return server_error()
@@ -80,5 +81,9 @@ def get_api():
     return app, db
 
 
+def run():
+    app.run(host='0.0.0.0')
+
+
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
+    run()
