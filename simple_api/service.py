@@ -1,69 +1,73 @@
 from flask import request
+from werkzeug.exceptions import BadRequest
 
 from simple_api.http_helper import (
     success,
     created,
     does_not_exist,
     server_error,
+    invalid_json,
 )
 from simple_api.api import api
-from simple_api.storage import db
+from simple_api.mongo_storage import storage
 
 
+# TODO decouple service and flask implementation
 @api.route('/objects', methods=['POST'])
 def post_object():
     try:
         data = request.get_json(force=True)
-        data['id'] = db.index
-        db.table[db.index] = data
-    except Exception:
-        return server_error()
+    except BadRequest:
+        return invalid_json()
 
-    response = created({'id': db.index})
-    db.index += 1
-
-    return response
+    try:
+        new_id = storage.create(data)
+        return created({'id': new_id})
+    except Exception as e:
+        return server_error(e)
 
 
 @api.route('/objects', methods=['GET'])
 def list_object():
     try:
-        return success({'data': list(db.table.values())})
+        result = storage.find()
+        response = success({'data': result})
+        return response
     except Exception as e:
-        return server_error()
+        return server_error(e)
 
 
-@api.route('/objects/<int:id>')
+@api.route('/objects/<string:id>')
 def get_object(id):
     try:
-        return success(db.table[id])
+        return success(storage.read(id))
     except KeyError as e:
         return does_not_exist()
     except Exception as e:
-        return server_error()
+        return server_error(e)
 
 
-@api.route('/objects/<int:id>', methods=['DELETE'])
+@api.route('/objects/<string:id>', methods=['DELETE'])
 def delete_object(id):
     try:
-        del db.table[id]
+        storage.delete(id)
+        return success({})
     except KeyError as e:
         return does_not_exist()
     except Exception as e:
-        return server_error()
-
-    return success({})
+        return server_error(e)
 
 
-@api.route('/objects/<int:id>', methods=['PUT'])
+@api.route('/objects/<string:id>', methods=['PUT'])
 def put_object(id):
     try:
-        data = request.get_json()
-        db.table[id]
-        db.table[id] = data
+        data = request.get_json(force=True)
+    except BadRequest:
+        return invalid_json()
+
+    try:
+        return success(storage.update(id, data))
     except KeyError as e:
         return does_not_exist()
     except Exception as e:
-        return server_error()
-
-    return success({})
+        return server_error(e)
