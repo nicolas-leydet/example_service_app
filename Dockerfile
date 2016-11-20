@@ -9,4 +9,4 @@ WORKDIR .
 ENV PYTHONPATH .
 
 ENTRYPOINT ["python"]
-CMD ["simple_api/server .py"]
+CMD ["simple_api/server.py"]
