@@ -1,9 +1,10 @@
 [x] a simple crud service (flask)
 [x] add setup
 [x] dockerize
-[.] add mongo storage
+[x] add mongo storage
 [.] Service lib (uncouple flask and service definition)
 [.] docker compose
+[.] fix docker deployment (communication service-mongodb)
 
 unsorted
 [.] add more tests
