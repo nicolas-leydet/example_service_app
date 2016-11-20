@@ -55,10 +55,10 @@ docker-build:
 	docker build . -t simple_api
 
 docker-service-start:
-	docker run -d -p 5000:5000 --link simple_mongo --name simple_api simple_api
+	docker run -d --name simple_api -p 5000:5000 --link simple_mongo simple_api
 
 docker-mongo-start:
-	docker run -d -p 27017:27017 --name simple_mongo mongo
+	docker run -d --name simple_mongo -p 27017:27017 mongo
 
 docker-stop-all:
 	docker stop simple_api || true
