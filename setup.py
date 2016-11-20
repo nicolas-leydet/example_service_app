@@ -23,7 +23,7 @@ setup(
     include_package_data=True,
     entry_points=dict(
         console_scripts=[
-            '{0}=simple_api.api'.format(SERVICE_NAME),
+            '{0}=simple_api.server:run'.format(SERVICE_NAME),
         ],
     ),
 )
