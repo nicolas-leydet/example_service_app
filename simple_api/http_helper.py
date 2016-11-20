@@ -21,7 +21,13 @@ def does_not_exist():
         payload={'errors': [{'code': 'DOES_NOT_EXIST'}]})
 
 
+def invalid_json():
+    return _response(
+        status_code=400,
+        payload={'errors': [{'code': 'INVALID_JSON'}]})
+
+
 def server_error(exception):
     return _response(
         status_code=500,
-        payload={'errors': [{'code': 'SERVER_ERROR'}]})
+        payload={'errors': [{'code': 'SERVER_ERROR', 'exception': exception}]})
