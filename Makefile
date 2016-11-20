@@ -48,3 +48,20 @@ test: ## run tests using pytest
 coverage: ## check code coverage with pytest and display report
 	pytest --cov simple_api --cov-report=html
 	$(BROWSER) htmlcov/index.html
+
+ldeploy: docker-stop-all docker-build docker-mongo-start docker-service-start
+
+docker-build:
+	docker build . -t simple_api
+
+docker-service-start:
+	docker run -d -p 5000:5000 --link simple_mongo --name simple_api simple_api
+
+docker-mongo-start:
+	docker run -d -p 27017:27017 --name simple_mongo mongo
+
+docker-stop-all:
+	docker stop simple_api || true
+	docker rm simple_api || true
+	docker stop simple_mongo || true
+	docker rm simple_mongo || true
