@@ -1,0 +1,22 @@
+[x] a simple crud service (flask)
+[x] add setup
+[x] dockerize
+[.] add mongo storage
+[.] Service lib (uncouple flask and service definition)
+[.] docker compose
+
+unsorted
+[.] add more tests
+[.] Service lib (uncouple flask and service definition)
+[.] Auth service (using redis)
+[.] docker compose
+[.] Service gateway (service registry + jwt checking)
+[.] Service gateway lib (service reg/call)
+[.] New crud service : interdependant with the first one
+[.] Add background running service (e.g. scrapping prices)
+[.] Add minimal FE
+[.] travis integration
+[.] non blocking IO
+[.] ngnix
+[.] system tests (excluding FE)
+[.] system tests (including FE)
