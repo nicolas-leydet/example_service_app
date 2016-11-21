@@ -1,11 +1,10 @@
 from flask import Flask
 
-
-api = Flask(__name__)
-
-
-import simple_api.simple_service  # noqa
+from simple_api.helper.flask_service import register_service
+from simple_api.knoggets import Knoggets
 
 
-def get_api():
+def create_api():
+    api = Flask(__name__)
+    register_service(api, Knoggets())
     return api

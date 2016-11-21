@@ -1,12 +1,10 @@
-from simple_api.api import get_api
-from simple_api.mongo_storage import storage
+from simple_api.api import create_api
+from simple_api.knoggets import Knoggets
 
 
 def run():
-    # TODO add context manager
-    storage.setup()
-    get_api().run(host='0.0.0.0')
-    storage.finalize()
+    create_api().run(host='0.0.0.0')
+    Knoggets.storage.setup()
 
 
 if __name__ == '__main__':

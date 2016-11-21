@@ -4,16 +4,17 @@ from bson import ObjectId
 from simple_api.settings import MONGODB_URI, MONGO_DB_NAME
 
 
+# TODO manage connection errors
 class MongoStorage(object):
     def __init__(self, collection_name):
         self.collection_name = collection_name
 
     def setup(self):
-        self.client = MongoClient(MONGODB_URI)
+        self.client = MongoClient(MONGODB_URI, maxPoolSize=500)
         self.db = self.client[MONGO_DB_NAME]
         self.collection = self.db[self.collection_name]
 
-    def finalize(self):
+    def terminate(self):
         self.client.close()
 
     def create(self, data):
@@ -27,7 +28,6 @@ class MongoStorage(object):
             filter_, data, return_document=ReturnDocument.AFTER)
         if not result:
             raise KeyError()
-
         return transform_id(result)
 
     def delete(self, id):
@@ -35,7 +35,7 @@ class MongoStorage(object):
         if result.deleted_count == 0:
             raise KeyError()
 
-    def find(self):
+    def find(self, query, offset, limit):
         result = self.collection.find({})
         return [transform_id(doc) for doc in result]
 
@@ -56,10 +56,3 @@ class MongoStorage(object):
 def transform_id(doc):
     doc['_id'] = str(doc['_id'])
     return doc
-
-
-storage = MongoStorage('objects')
-
-
-def get_storage():
-    return storage
