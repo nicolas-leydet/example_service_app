@@ -45,9 +45,15 @@ lint: ## check style with flake8
 test: ## run tests using pytest
 	pytest
 
+load-test: ## start load tests
+	locust -f tests/load/scenario.py --host=http://localhost:5000
+
 coverage: ## check code coverage with pytest and display report
 	pytest --cov knogget --cov-report=html
 	$(BROWSER) htmlcov/index.html
+
+run: ## run application locally
+	python -m knogget.server
 
 ldeploy: docker-stop-all docker-build docker-mongo-start docker-service-start
 
