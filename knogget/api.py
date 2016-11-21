@@ -1,7 +1,7 @@
 from flask import Flask
 
-from simple_api.helper.flask_service import register_service
-from simple_api.services.knoggets import Knoggets
+from knogget.helper.flask_service import register_service
+from knogget.services.knoggets import Knoggets
 
 
 def create_api():

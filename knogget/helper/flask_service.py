@@ -1,7 +1,7 @@
 from flask import request
 from werkzeug.exceptions import BadRequest
 
-from simple_api.helper import http
+from knogget.helper import http
 
 
 # TODO manage non CRUD functions

@@ -1,7 +1,7 @@
 import pymongo
 from bson import ObjectId
 
-from simple_api.settings import MONGODB_URI, MONGO_DB_NAME
+from knogget.settings import MONGODB_URI, MONGO_DB_NAME
 
 
 # TODO manage connection errors

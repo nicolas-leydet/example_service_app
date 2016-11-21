@@ -3,8 +3,8 @@ import json
 
 import pytest
 
-from simple_api.api import create_api
-from simple_api.services.knoggets import Knoggets
+from knogget.api import create_api
+from knogget.services.knoggets import Knoggets
 
 
 multi_test = pytest.mark.parametrize

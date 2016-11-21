@@ -40,28 +40,28 @@ clean-test: ## remove pytest and coverage artifacts
 	rm -fr htmlcov/
 
 lint: ## check style with flake8
-	flake8 simple_api tests
+	flake8 knogget tests
 
 test: ## run tests using pytest
 	pytest
 
 coverage: ## check code coverage with pytest and display report
-	pytest --cov simple_api --cov-report=html
+	pytest --cov knogget --cov-report=html
 	$(BROWSER) htmlcov/index.html
 
 ldeploy: docker-stop-all docker-build docker-mongo-start docker-service-start
 
 docker-build:
-	docker build . -t simple_api
+	docker build . -t knogget_api
 
 docker-service-start:
-	docker run -d --name simple_api -p 5000:5000 --link simple_mongo simple_api
+	docker run -d --name knogget_api -p 5000:5000 --link simple_mongo knogget_api
 
 docker-mongo-start:
 	docker run -d --name simple_mongo -p 27017:27017 mongo
 
 docker-stop-all:
-	docker stop simple_api || true
-	docker rm simple_api || true
+	docker stop knogget_api || true
+	docker rm knogget_api || true
 	docker stop simple_mongo || true
 	docker rm simple_mongo || true

@@ -5,7 +5,7 @@ import os.path
 from setuptools import setup, find_packages
 
 
-SERVICE_NAME = 'simple_api'
+SERVICE_NAME = 'knogget'
 
 
 requirements_path = os.path.join(
@@ -14,7 +14,8 @@ requirements_path = os.path.join(
 
 setup(
     name=SERVICE_NAME,
-    description='very simple service',
+    description='Record your nuggets of knowledge and do interesting '\
+                'things with them (hopefully) '
     version='0.1',
     author='Nicolas Leydet',
     packages=find_packages(),
@@ -23,7 +24,7 @@ setup(
     include_package_data=True,
     entry_points=dict(
         console_scripts=[
-            '{0}=simple_api.server:run'.format(SERVICE_NAME),
+            '{0}=knogget.server:run'.format(SERVICE_NAME),
         ],
     ),
 )

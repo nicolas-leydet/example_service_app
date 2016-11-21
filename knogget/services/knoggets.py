@@ -1,4 +1,4 @@
-from simple_api.dependencies.mongodb import MongoClient
+from knogget.dependencies.mongodb import MongoClient
 
 
 class Knoggets(object):
