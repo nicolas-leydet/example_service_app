@@ -1,16 +1,16 @@
-from pymongo import MongoClient, ReturnDocument
+import pymongo
 from bson import ObjectId
 
 from simple_api.settings import MONGODB_URI, MONGO_DB_NAME
 
 
 # TODO manage connection errors
-class MongoStorage(object):
+class MongoClient(object):
     def __init__(self, collection_name):
         self.collection_name = collection_name
 
     def setup(self):
-        self.client = MongoClient(MONGODB_URI, maxPoolSize=500)
+        self.client = pymongo.MongoClient(MONGODB_URI, maxPoolSize=500)
         self.db = self.client[MONGO_DB_NAME]
         self.collection = self.db[self.collection_name]
 
@@ -25,7 +25,7 @@ class MongoStorage(object):
         filter_ = {'_id': ObjectId(id)}
         data.pop('id', None)
         result = self.collection.find_one_and_replace(
-            filter_, data, return_document=ReturnDocument.AFTER)
+            filter_, data, return_document=pymongo.ReturnDocument.AFTER)
         if not result:
             raise KeyError()
         return transform_id(result)

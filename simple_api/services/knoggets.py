@@ -1,9 +1,9 @@
-from simple_api.mongo_storage import MongoStorage
+from simple_api.dependencies.mongodb import MongoClient
 
 
 class Knoggets(object):
 
-    storage = MongoStorage('knoggets')
+    storage = MongoClient('knoggets')
 
     def create(self, data):
         return self.storage.create(data)

@@ -1,5 +1,6 @@
 pytest==3.0.4
 pytest-cov
 pytest_flask==0.10.0
+locust
 pylint
 flake8

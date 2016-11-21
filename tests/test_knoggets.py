@@ -1,10 +1,10 @@
-import json
 from string import Template
+import json
 
 import pytest
 
 from simple_api.api import create_api
-from simple_api.knoggets import Knoggets
+from simple_api.services.knoggets import Knoggets
 
 
 multi_test = pytest.mark.parametrize

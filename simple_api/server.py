@@ -1,5 +1,5 @@
 from simple_api.api import create_api
-from simple_api.knoggets import Knoggets
+from simple_api.services.knoggets import Knoggets
 
 
 def run():
