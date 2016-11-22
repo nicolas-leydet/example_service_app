@@ -1,14 +1,15 @@
+import resource
+
+from gevent.wsgi import WSGIServer
 from gevent import monkey
 monkey.patch_all()
 
-from gevent.wsgi import WSGIServer  # noqa
-from knogget.api import create_api   # noqa
+from knogget import api   # noqa
 from knogget.services.knoggets import Knoggets  # noqa
 
 
 def run():
-    api = create_api()
-    Knoggets.storage.setup()
+    resource.setrlimit(resource.RLIMIT_NOFILE, (4096, 65536))
 
     http_server = WSGIServer(('', 5000), api)
     http_server.serve_forever()

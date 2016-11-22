@@ -1,12 +1,34 @@
+import inspect
+
 from flask import request
 from werkzeug.exceptions import BadRequest
 
+from knogget.helper.dependency import make_dependencies_lazy
 from knogget.helper import http
 
 
-# TODO manage non CRUD functions
-# TODO (Maybe) make it a decocator
+def service_api(flask_app, decorator_name='http_service'):
+    '''
+    Add the `decorator_name` decorator to the flask app `flask_app`
 
+    This decorator can be used to decorate service classes.
+    Service classes public methods are wrapped in http managemnt code
+    and mapped to api routes (using convention see register_service function)
+    '''
+    assert not hasattr(flask_app, decorator_name)
+    setattr(flask_app, decorator_name, get_flask_service_decorator(flask_app))
+    return flask_app
+
+
+def get_flask_service_decorator(api):
+    def flask_service_decorator(service_class):
+        make_dependencies_lazy(service_class)
+        register_service(api, service_class())
+        return service_class
+    return flask_service_decorator
+
+
+# TODO manage non CRUD functions
 def register_service(api, service):
     '''
     Register a route for each public methods of the service instance
@@ -15,8 +37,6 @@ def register_service(api, service):
     :param api: a flask apilication
     :param service: object whose public methods (by convention, not
     starting by _) are register in api's routes.
-
-    TODO look into the pro / cons of using Werkzeug instead of Flask
     '''
     endpoint_name = service.__class__.__name__.lower()
 

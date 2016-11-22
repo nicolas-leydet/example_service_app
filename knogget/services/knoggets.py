@@ -1,6 +1,8 @@
+from knogget import api
 from knogget.dependencies.mongodb import MongoClient
 
 
+@api.http_service
 class Knoggets(object):
 
     storage = MongoClient('knoggets')

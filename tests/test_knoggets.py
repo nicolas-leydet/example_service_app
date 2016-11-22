@@ -3,8 +3,8 @@ import json
 
 import pytest
 
-from knogget.api import create_api
-from knogget.services.knoggets import Knoggets
+from knogget import api
+from knogget.services.knoggets import Knoggets  # noqa
 
 
 multi_test = pytest.mark.parametrize
@@ -16,7 +16,7 @@ def pad_tuple(tuple_, size, default=None):
 
 @pytest.fixture(scope='session')
 def app():
-    return create_api()
+    return api
 
 
 # TODO make real unit tests if too slow
@@ -25,7 +25,6 @@ def app():
 @pytest.fixture(scope='session')
 def storage():
     storage = Knoggets.storage
-    storage.setup()
     yield storage
     storage.terminate()
 

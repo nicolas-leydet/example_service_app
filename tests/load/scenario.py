@@ -2,7 +2,7 @@ from locust import HttpLocust, TaskSet
 import resource
 
 
-resource.setrlimit(resource.RLIMIT_NOFILE, (2048, 65536))
+resource.setrlimit(resource.RLIMIT_NOFILE, (4096, 65536))
 
 
 def end_taskset(context):

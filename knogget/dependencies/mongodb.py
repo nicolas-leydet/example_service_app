@@ -1,16 +1,18 @@
 import pymongo
 from bson import ObjectId
 
-from knogget.settings import MONGODB_URI, MONGO_DB_NAME
+from knogget.helper.dependency import Dependency
+from knogget.settings import MONGODB_URI, MONGO_DB_NAME, MONGO_POOL_SIZE
 
 
 # TODO manage connection errors
-class MongoClient(object):
+class MongoClient(Dependency):
     def __init__(self, collection_name):
         self.collection_name = collection_name
 
-    def setup(self):
-        self.client = pymongo.MongoClient(MONGODB_URI, maxPoolSize=500)
+    def initialize(self):
+        self.client = pymongo.MongoClient(MONGODB_URI,
+                                          maxPoolSize=MONGO_POOL_SIZE)
         self.db = self.client[MONGO_DB_NAME]
         self.collection = self.db[self.collection_name]
 
