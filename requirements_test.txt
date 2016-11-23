@@ -1,6 +1,8 @@
 pytest==3.0.4
-pytest-cov
-pytest_flask==0.10.0
-locustio
+pytest-cov==2.4.0
+pytest-flask==0.10.0
+pytest-mock==1.5.0
+git+git://github.com/locustio/locust.git@master#egg=locustio
+apispec==0.17.1
 pylint
 flake8
