@@ -26,3 +26,39 @@ unsorted
 [.] ngnix
 [.] system tests (excluding FE)
 [.] system tests (including FE)
+
+
+
+ideas :
+
+Trying out a tests description that would give more importance to what we are testing than how
+
+```
+@testing('additions', [
+    'a, b, result'
+    (0, 0, 0),
+    (1, 1, 2),
+    (1, -1, 0),
+])
+def test_add(a, b, result):
+    pass
+
+
+testing('more additions', [
+    tc(a=3, b=3, result=6),
+    tc(a=4, b=2, result=6),
+    tc(a=5, b=1, result=6),
+], using=test_add)
+
+
+testing('addition errors', {
+    'wrong first parameter': tc(a='apple', b=3, error=ValueError),
+    'wrong second parameter': tc(a=10, b='orange', error=ValueError),
+}, using=test_add_error)
+
+testing('some kind of function', {
+    '': 'name, age'
+    'test 1': ('john', 55),
+    'test 2': ('bill', 23),
+}, using=test_some_function)
+```
