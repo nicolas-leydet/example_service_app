@@ -15,13 +15,13 @@ The backend will extract objects that it regnonize and index / store them for la
 
 Example of object type : recipe  
 It will be extracted from MD code syntax
-````
+```
 ```recipe
 
 <recipe description using DSL>
 
-``` 
-````
+``` .
+```
 
 
 From the recipe, the BE will be
